@@ -260,10 +260,3 @@ retains its thoughtful privacy architecture while replacing the MLX runtime with
 adding a verified Mac-to-Windows workflow.
 
 See [NOTICE.md](NOTICE.md) for attribution details. Licensed under the [MIT License](LICENSE).
-
-## You belong here
-
-Personal computing projects are more fun when more people can take part. Whether you are learning
-Python, experimenting with machine learning for the first time, or simply curious about your own
-writing habits, questions are welcome. Start slowly, keep your data private, and enjoy building
-something that is uniquely yours.
