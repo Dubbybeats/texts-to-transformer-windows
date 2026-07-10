@@ -1,0 +1,53 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "texts-to-transformer-windows"
+version = "0.2.0"
+description = "Train a private Transformer from scratch on iMessage history with Windows and NVIDIA CUDA"
+readme = "README.md"
+requires-python = ">=3.11,<3.12"
+dependencies = [
+  "numpy>=2.0,<3",
+  "pytypedstream>=0.1,<1",
+  "pyyaml>=6.0,<7",
+  "safetensors>=0.5,<1",
+  "tokenizers>=0.22,<0.23",
+  "torch>=2.5,<3",
+  "typer>=0.16,<1",
+]
+
+[project.scripts]
+imessage-cuda = "imessage_cuda.cli:app"
+
+[tool.uv.sources]
+torch = [
+  { index = "pytorch-cu128", marker = "sys_platform == 'win32'" },
+]
+
+[[tool.uv.index]]
+name = "pytorch-cu128"
+url = "https://download.pytorch.org/whl/cu128"
+explicit = true
+
+[dependency-groups]
+dev = [
+  "pytest>=8,<10",
+  "pytest-cov>=6,<8",
+  "ruff>=0.12,<1",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/imessage_cuda"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
