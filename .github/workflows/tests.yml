@@ -1,0 +1,49 @@
+name: Tests
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  synthetic-tests:
+    name: Synthetic tests on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, ubuntu-latest]
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6
+        with:
+          python-version: "3.11"
+          enable-cache: true
+
+      - name: Create environment
+        run: uv venv --python 3.11
+
+      - name: Install CPU test runtime
+        run: uv pip install torch --torch-backend=cpu
+
+      - name: Install project and test tools
+        run: uv pip install -e . pytest ruff
+
+      - name: Lint
+        run: uv run --no-sync ruff check .
+
+      - name: Check formatting
+        run: uv run --no-sync ruff format --check .
+
+      - name: Run synthetic tests
+        run: uv run --no-sync pytest -q
+
+      - name: Verify private artifacts are not tracked
+        shell: bash
+        run: test -z "$(git ls-files work outputs '*.db' '*.npy' '*.safetensors')"

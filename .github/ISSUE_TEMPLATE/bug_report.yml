@@ -1,0 +1,49 @@
+name: Bug report
+description: Tell us what went wrong without sharing private message data
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping improve the Windows experience. Never attach `chat.db`, anything from `work/` or `outputs/`, screenshots of conversations, tokenizers, checkpoints, or model weights.
+  - type: textarea
+    id: problem
+    attributes:
+      label: What happened?
+      description: Describe the problem and the command you ran. Remove usernames and personal paths.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect?
+    validations:
+      required: true
+  - type: input
+    id: windows
+    attributes:
+      label: Windows version
+      placeholder: Windows 11 24H2
+    validations:
+      required: true
+  - type: input
+    id: gpu
+    attributes:
+      label: NVIDIA GPU
+      placeholder: RTX 4070 Super
+    validations:
+      required: true
+  - type: textarea
+    id: doctor
+    attributes:
+      label: Safe doctor output
+      description: Paste only non-private fields such as CUDA availability, GPU name, and Python version. Remove personal paths.
+      render: shell
+  - type: checkboxes
+    id: privacy
+    attributes:
+      label: Privacy check
+      options:
+        - label: I removed message text, usernames, personal paths, databases, datasets, tokenizers, checkpoints, and model weights.
+          required: true
