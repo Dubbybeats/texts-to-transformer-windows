@@ -7,28 +7,25 @@
 [![PyTorch CUDA](https://img.shields.io/badge/PyTorch-CUDA%2012.8-EE4C2C?logo=pytorch&logoColor=white)](https://pytorch.org/)
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-Apple Silicon should not be the only comfortable way to experiment with a personal text model.
-This project brings the excellent
-[texts-to-transformer](https://github.com/Doriandarko/texts-to-transformer) idea to Windows PCs with
-NVIDIA graphics cards.
+This project adapts the [texts-to-transformer](https://github.com/Doriandarko/texts-to-transformer)
+iMessage training pipeline for Windows PCs with NVIDIA graphics cards.
 
-If you have never trained a model before, you are welcome here. You do not need to understand neural
-networks, CUDA, tokenizers, or databases before you begin. The walkthrough explains each step, what
-you should see, and what to do if something goes wrong.
+The walkthrough is written for first-time users and explains the setup, expected output, and common
+failure cases.
 
 > [!IMPORTANT]
 > You need temporary access to a Mac where your iMessages are synced. Apple does not provide the
 > Messages database to Windows. The Mac safely exports the data once; your Windows PC does all the
 > processing and model training afterward.
 
-## What does it make?
+## Output
 
 The result is a small local model that learns patterns in the way you reply: sentence length,
 punctuation, slang, casing, emoji, and familiar conversational rhythms. Incoming messages are used
 as context, while training loss is applied only to messages you sent.
 
-It is a style model, not a replacement for ChatGPT. It will not reliably reason, perform research,
-or know current facts. Its charm is much narrower: it tries to sound a little like you.
+It is a style model, not a general-purpose assistant. It does not reliably reason, perform research,
+or know current facts. Its purpose is to generate local reply suggestions in a similar style.
 
 Nothing is sent automatically. The final `chat` command only prints reply suggestions in your
 terminal.
@@ -62,15 +59,14 @@ You will need:
 An RTX 4070 Super is comfortably supported. Other recent CUDA-capable NVIDIA cards should work too.
 CPU mode is available for tests, but useful training is intended for an NVIDIA GPU.
 
-## Choose your guide
+## Documentation
 
-**New to this?** Start with the friendly, click-by-click
-[Windows walkthrough](docs/WINDOWS_WALKTHROUGH.md). It begins with downloading the project and
-finishes with your first generated reply.
+Start with the step-by-step [Windows walkthrough](docs/WINDOWS_WALKTHROUGH.md). It covers the
+installation process through the first generated reply.
 
-**Already comfortable with PowerShell?** Follow the condensed quick start below.
+If you are comfortable with PowerShell, use the condensed quick start below.
 
-**Want to understand the safety model first?** Read [Privacy and safety](docs/privacy.md).
+For the data-handling model, see [Privacy and safety](docs/privacy.md).
 
 ## Quick start
 
@@ -172,7 +168,7 @@ uv run imessage-cuda train `
 Training prints safe aggregate progress such as loss, speed, and GPU memory. It never prints message
 text. If `work/reports/model-selection.json` selects `model-7m`, use `configs/model-7m.yaml` instead.
 
-### 7. Evaluate, export, and say hello
+### 7. Evaluate, export, and run
 
 ```powershell
 uv run imessage-cuda evaluate `
@@ -244,9 +240,8 @@ outputs/                           ignored tokenizers, checkpoints, and models
 
 ## For contributors
 
-Windows users with different NVIDIA cards are especially welcome. Bug reports, documentation
-improvements, accessibility suggestions, and careful privacy improvements all matter. You do not
-need to be an expert to contribute.
+Contributions related to Windows hardware compatibility, documentation, accessibility, and privacy
+are useful.
 
 Please read [CONTRIBUTING.md](CONTRIBUTING.md) before opening a pull request. Never include private
 message data, screenshots of conversations, tokenizers, checkpoints, or trained weights in an issue.
@@ -256,7 +251,7 @@ message data, screenshots of conversations, tokenizers, checkpoints, or trained 
 This project is derived from
 [Doriandarko/texts-to-transformer](https://github.com/Doriandarko/texts-to-transformer), which
 created the original from-scratch iMessage training pipeline for Apple Silicon. This Windows port
-retains its thoughtful privacy architecture while replacing the MLX runtime with PyTorch CUDA and
+retains the privacy architecture while replacing the MLX runtime with PyTorch CUDA and
 adding a verified Mac-to-Windows workflow.
 
 See [NOTICE.md](NOTICE.md) for attribution details. Licensed under the [MIT License](LICENSE).
